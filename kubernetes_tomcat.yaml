@@ -29,7 +29,7 @@ spec:
   template:
     metadata:
       labels:
-        app: testapp
+        app: configdemo
     spec:
       containers:
         - image: docker.io/keerthi19/configdemo:withapp2
