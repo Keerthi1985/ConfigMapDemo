@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: docker.io/keerthi19/configdemo:withapp1
+          image: docker.io/keerthi19/configdemo:withapp2
           ports:
           - containerPort: 8082          
           volumeMounts:
