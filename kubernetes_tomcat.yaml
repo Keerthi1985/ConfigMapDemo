@@ -15,31 +15,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: configdemo
   name: configdemo
-  annotations:
-    configmap.reloader.stakater.com/reload: "spring-config"
 spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: configdemo
   template:
     metadata:
       labels:
-        app: configdemo
+        app: testapp
     spec:
       containers:
-        - name: server
-          image: docker.io/keerthi19/configdemo:withapp2
+        - image: docker.io/keerthi19/configdemo:withapp2
+          name: server
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "2"
+              memory: "6Gi"
+            requests:
+              cpu: "1"
+              memory: "4Gi"
           ports:
-          - containerPort: 8082          
+            - containerPort: 8082
+              name: web
+              protocol: TCP
           volumeMounts:
-          - name: spring-boot-app-env-config-vol 
-            mountPath: "/config"
+            - name: configvol
+              mountPath: "/logs/config"
       volumes:
-        - name: spring-boot-app-env-config-vol
+        - name: configvol
           configMap:
             name: spring-config
-      restartPolicy: Always     
+
 ---
 apiVersion: v1
 kind: Service
