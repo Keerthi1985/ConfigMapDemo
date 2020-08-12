@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-config
+data:
+    welcome.message: Kubernetes! Welcome To Spring Boot Hello World App!  
+    greeting.message: K8Cluster! Greeting To Spring Boot Hello World App!
